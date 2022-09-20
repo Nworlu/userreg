@@ -24,5 +24,23 @@ router.post('/register', async(req,res)=>{
   console.log(newUser);
 });
 
+//Get Users List
+// Path : /user/users
+// Private <- !Public
+router.get('/users', async(req,res)=>{
+  try {
+    const users = await Users.find({}).sort({_id:-1}) // sort Basic on last user added
+    res.status(200).json({
+      success:true,
+      data:users
+    }) 
+  } catch (error) {
+    res.status(500).json({
+      success:false,
+      message:"Unexpected Error"
+    })  //  Incase its Crash :-)
+  }
+})
+
 
 module.exports = router;
